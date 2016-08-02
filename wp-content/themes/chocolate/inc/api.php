@@ -32,6 +32,68 @@ class API {
             $this->userId = NULL;
     }
 
+    function getDiseases($id) {
+
+        $args = ['post_type' => 'diseases',
+            'tax_query' => [['taxonomy' => 'diseasesCategory',
+            'field' => 'id',
+            'terms' => $id]]
+        ];
+        return $this->getResults($args);
+    }
+
+    function getDiseasesById($id) {
+        $args = ['post_type' => 'diseases', 'p' => $id];
+        return $this->getResults($args);
+    }
+
+    function getHerbalSupplements($id) {
+        $args = ['post_type' => 'herbalsupplements',
+            'tax_query' => [['taxonomy' => 'herbalCategory',
+            'field' => 'id',
+            'terms' => $id]]
+        ];
+        return $this->getResults($args);
+    }
+
+    function getHerbalById($id) {
+        $args = ['post_type' => 'herbalsupplements', 'p' => $id];
+        return $this->getResults($args);
+    }
+
+    function therapy($id) {
+        $args = ['post_type' => 'therapy',
+            'tax_query' => [['taxonomy' => 'therapyCategory',
+            'field' => 'id',
+            'terms' => $id]]
+        ];
+        return $this->getResults($args);
+    }
+
+    function getTherapyById($id) {
+        $args = ['post_type' => 'therapy', 'p' => $id];
+        return $this->getResults($args);
+    }
+
+    function pulses($getId) {
+        $args = ['post_type' => 'pulses',
+            'tax_query' => [['taxonomy' => 'pulseCategory',
+            'field' => 'id',
+            'terms' => $getId]]
+        ];
+        return $this->getResults($args);
+    }
+
+    function getPulsesById($id) {
+        $args = ['post_type' => 'pulses', 'p' => $id];
+        return $this->getResults($args);
+    }
+
+    function logout() {
+        wp_logout();
+        wp_redirect(get_site_url());
+    }
+
     function register() {
         $userData = [
             'user_login' => $_REQUEST['user_login'],

@@ -5,6 +5,14 @@ if ((is_page('register') && is_user_logged_in()) || (is_page('my-account') && !i
     wp_redirect(get_site_url());
 endif;
 ?>
+<?php if (is_user_logged_in()): ?>
+    <style> #menu-item-85{ display:none; }</style>
+<?php endif; ?>
+
+<?php if (!is_user_logged_in()): ?>
+    <style> #menu-item-87{ display:none; }</style>
+<?php endif; ?> 
+
 <!DOCTYPE html>
 <html dir="ltr" lang="en-US">
     <head>
@@ -86,7 +94,7 @@ endif;
                         ============================================= -->
                         <nav id="primary-menu">
                             <?php wp_nav_menu(['container' => 'ul']) ?>
-            
+
                             <!--
                                 <ul>
                                         <li class="current"><a href="index.html"><div>Home</div></a></li>

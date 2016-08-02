@@ -3,7 +3,6 @@
 RewriteEngine On
 RewriteBase /ayushakti/
 RewriteRule ^index\.php$ - [L]
-RewriteRule ^api/(.*) ?action=api&method=$1 [QSA,L,NC]
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
 RewriteRule . /ayushakti/index.php [L]

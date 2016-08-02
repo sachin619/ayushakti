@@ -437,3 +437,4 @@ require get_template_directory() . '/inc/api.php';
 require get_template_directory() . '/inc/custom-post-types.php';
 require get_template_directory() . '/inc/admin-menu-items.php';
 require get_template_directory() . '/inc/miscellaneous.php';
+require get_template_directory() . '/inc/custom-taxonomy.php';
