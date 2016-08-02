@@ -1,62 +1,106 @@
-<?php
-/**
- * The main template file
- *
- * This is the most generic template file in a WordPress theme
- * and one of the two required files for a theme (the other being style.css).
- * It is used to display a page when nothing more specific matches a query.
- * E.g., it puts together the home page when no home.php file exists.
- *
- * @link http://codex.wordpress.org/Template_Hierarchy
- *
- * @package WordPress
- * @subpackage Twenty_Sixteen
- * @since Twenty Sixteen 1.0
- */
+<?php get_header(); ?>
 
-get_header(); ?>
+		<section id="slider" class="slider-parallax swiper_wrapper clearfix">
 
-	<div id="primary" class="content-area">
-		<main id="main" class="site-main" role="main">
+			<div class="slider-parallax-inner">
 
-		<?php if ( have_posts() ) : ?>
+				<div class="swiper-container swiper-parent">
+					<div class="swiper-wrapper">
+						<div class="swiper-slide dark" style="background-image: url('<?=  get_template_directory_uri()?>/images/slider/banner1.jpg');">
+							<div class="container clearfix">
+								<div class="slider-caption slider-caption-center">
+									<h2 data-caption-animate="fadeInUp">Fire</h2>
+									<p data-caption-animate="fadeInUp" data-caption-delay="200">Portrays Energy and Vitality</p>
+								</div>
+							</div>
+						</div>
+						
+						<div class="swiper-slide" style="background-image: url('<?=  get_template_directory_uri()?>/images/slider/banner2.jpg'); background-position: center top;">
+							<div class="container clearfix">
+								<div class="slider-caption">
+									<h2 data-caption-animate="fadeInUp">WIND</h2>
+									<p data-caption-animate="fadeInUp" data-caption-delay="200">Weightless yet Moving</p>
+								</div>
+							</div>
+						</div>
+						
+						<div class="swiper-slide" style="background-image: url('<?=  get_template_directory_uri()?>/images/slider/banner3.jpg'); background-position: center top;">
+							<div class="container clearfix">
+								<div class="slider-caption">
+									<h2 data-caption-animate="fadeInUp" style="color:#000;">WATER</h2>
+									<p data-caption-animate="fadeInUp" data-caption-delay="200" style="color:#000;">Brings in Tranquility and Peace</p>
+								</div>
+							</div>
+						</div>
+						
+						<div class="swiper-slide" style="background-image: url('<?=  get_template_directory_uri()?>/images/slider/banner4.jpg'); background-position: center top;">
+							<div class="container clearfix">
+								<div class="slider-caption">
+									<h2 data-caption-animate="fadeInUp">EARTH</h2>
+									<p data-caption-animate="fadeInUp" data-caption-delay="200">Denotes Poise and Stability</p>
+								</div>
+							</div>
+						</div>
+						
+						<div class="swiper-slide" style="background-image: url('<?=  get_template_directory_uri()?>/images/slider/banner5.jpg'); background-position: center top;">
+							<div class="container clearfix">
+								<div class="slider-caption">
+									<h2 data-caption-animate="fadeInUp">SKY</h2>
+									<p data-caption-animate="fadeInUp" data-caption-delay="200">Seeking Abundance Within</p>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div id="slider-arrow-left"><i class="icon-angle-left"></i></div>
+					<div id="slider-arrow-right"><i class="icon-angle-right"></i></div>
+				</div>
 
-			<?php if ( is_home() && ! is_front_page() ) : ?>
-				<header>
-					<h1 class="page-title screen-reader-text"><?php single_post_title(); ?></h1>
-				</header>
-			<?php endif; ?>
+			</div>
 
-			<?php
-			// Start the loop.
-			while ( have_posts() ) : the_post();
+		</section>
 
-				/*
-				 * Include the Post-Format-specific template for the content.
-				 * If you want to override this in a child theme, then include a file
-				 * called content-___.php (where ___ is the Post Format name) and that will be used instead.
-				 */
-				get_template_part( 'template-parts/content', get_post_format() );
+		<!-- Content
+		============================================= -->
+		<section id="content">
 
-			// End the loop.
-			endwhile;
+			<div class="content-wrap">
 
-			// Previous/next page navigation.
-			the_posts_pagination( array(
-				'prev_text'          => __( 'Previous page', 'twentysixteen' ),
-				'next_text'          => __( 'Next page', 'twentysixteen' ),
-				'before_page_number' => '<span class="meta-nav screen-reader-text">' . __( 'Page', 'twentysixteen' ) . ' </span>',
-			) );
+				<div class="container clearfix">
 
-		// If no content, include the "No posts found" template.
-		else :
-			get_template_part( 'template-parts/content', 'none' );
+					<div class="col-md-4 nobottommargin">
+						<div class="feature-box fbox-center fbox-light fbox-effect nobottomborder">
+							<div class="fbox-icon">
+								<a href="#"><i class="i-alt noborder icon-home"></i></a>
+							</div>
+							<h3>About Ayushakti<span class="subtitle">Ayushakti Ayurved Pvt. Ltd. Is an ISO 9000-2001 certified company, established in the year 1987 with a vision to transform life on this planet making it happy healthy</span></h3>
+						</div>
+					</div>
 
-		endif;
-		?>
+					<div class="col-md-4 nobottommargin">
+						<div class="feature-box fbox-center fbox-light fbox-effect nobottomborder">
+							<div class="fbox-icon">
+								<a href="#"><i class="i-alt noborder icon-leaf"></i></a>
+							</div>
+							<h3>About Ayurveda<span class="subtitle">Ayurveda is Sanskrit for "science of life," and it is the world's oldest health-care system.</span></h3>
+						</div>
+					</div>
 
-		</main><!-- .site-main -->
-	</div><!-- .content-area -->
+					<div class="col-md-4 nobottommargin col_last">
+						<div class="feature-box fbox-center fbox-light fbox-effect nobottomborder">
+							<div class="fbox-icon">
+								<a href="#"><i class="i-alt noborder icon-desktop"></i></a>
+							</div>
+							<h3>About Software<span class="subtitle">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s,</span></h3>
+						</div>
+					</div>
 
-<?php get_sidebar(); ?>
+					<div class="clear"></div><div class="line bottommargin-lg"></div>
+
+				</div>			
+
+
+			</div>
+
+		</section><!-- #content end -->
+
 <?php get_footer(); ?>

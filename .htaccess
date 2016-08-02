@@ -1,12 +1,12 @@
 # BEGIN WordPress
 <IfModule mod_rewrite.c>
 RewriteEngine On
-RewriteBase /wordpress
+RewriteBase /ayushakti/
 RewriteRule ^index\.php$ - [L]
 RewriteRule ^api/(.*) ?action=api&method=$1 [QSA,L,NC]
-
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
-RewriteRule . /index.php [L]
+RewriteRule . /ayushakti/index.php [L]
 </IfModule>
+
 # END WordPress

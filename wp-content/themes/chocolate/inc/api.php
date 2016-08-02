@@ -32,6 +32,46 @@ class API {
             $this->userId = NULL;
     }
 
+    function register() {
+        $userData = [
+            'user_login' => $_REQUEST['user_login'],
+            'first_name' => $_REQUEST['first_name'],
+            'user_email' => $_REQUEST['user_email'],
+            'user_pass' => $_REQUEST['user_pass'],
+            'role' => 'author',
+        ];
+        $email = email_exists($_REQUEST['user_email']); //check if email id exist
+        if ($email != "") {
+            return ['msg' => "Email Id already exist", 'errorType' => 'danger'];
+        } else {
+            $user_id = wp_insert_user($userData);
+            update_user_meta($user_id, 'phone', $user['phone']);
+
+            if (!is_wp_error($user_id))
+                return ['msg' => 'Registered Successfully', 'errorType' => 'success', 'user' => $user_id];
+            else
+                return ['msg' => "Something goes wrong try again later", 'errorType' => 'danger'];
+        }
+    }
+
+    function login() {
+        $username = $_REQUEST['userName'];
+        $password = $_REQUEST['password'];
+        $credential = ['user_login' => $username, 'user_password' => $password];
+        $userDetails = get_user_by('email', $username);
+        $getStatus = get_user_meta($userDetails->data->ID, 'status')[0];
+        if ($getStatus == 'No'):
+            return ['msg' => "Sorry! Your account not yet approved", 'errorType' => 'danger'];
+        endif;
+        $userid = wp_signon($credential, false);
+        $getId = (array) $userid->data;
+        if (!is_wp_error($userid)):
+            return ['msg' => "success_login", 'userData' => get_userdata($getId['ID'])];
+        else:
+            return ['msg' => "Sorry! Please enter valid credential", 'errorType' => 'danger'];
+        endif;
+    }
+
     function getPage() {
         return $this->getResults(['post_type' => 'page', 'page_id' => $_REQUEST['id']], 1);
     }
