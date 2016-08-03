@@ -1,5 +1,6 @@
 <?php get_header(); ?>
 <?php /* Template Name: Pulses */ ?> 
+<?php $title = get_the_title(); ?>
 <section id="content" style="margin-bottom: 0px;">
     <div class="content-wrap">
         <div class="container-fluid clearfix">
@@ -11,10 +12,12 @@
 
                     <div class="accordion accordion-bg clearfix">	
                         <?php
-                        $getResults = array_reverse(get_terms('pulseCategory'));
+                        $getResults = get_terms('pulseCategory');
+                        $countForTitle = 0;
                         foreach ($getResults as $getCategory):
                             ?>
-                            <div class="acctitle"><i class="acc-closed icon-plus"></i><i class="acc-open icon-remove"></i>
+                        
+                            <div class="acctitle <?= 'title' . $countForTitle++ ?>"><i class="acc-closed icon-plus"></i><i class="acc-open icon-remove"></i>
                                 <a style="color:white" href="#"><?= $getCategory->name ?></a></div>
                             <div class="acc_content clearfix" style="display: none;">
                                 <div class="widget widget_links clearfix">
@@ -22,14 +25,18 @@
                                         <?php
                                         $getType = $api->pulses($getCategory->term_id);
                                         foreach ($getType as $getTypeDetails):
+                                            $collectPostId[] = $getTypeDetails['id'];
                                             $getBaseUrl = strtok($_SERVER['REQUEST_URI'], '?');
-                                            $createUrl = $getBaseUrl . "?id=" .  $getTypeDetails['id'];
+                                            $createUrl = $getBaseUrl . "?id=" .  $getTypeDetails['id']."&type=".$getCategory->term_id;
                                             ?>
-                                            <li><a href="<?= $createUrl ?>"><div><?= $getTypeDetails['title'] ?></div></a></li>
+                                            <li class="<?= $getTypeDetails['id'] == $_REQUEST['id']&&$getCategory->term_id==$_REQUEST['type'] ? 'selectedCategory' : '' ?>">
+                                                <a href="<?= $createUrl ?>"><div> <?= $getTypeDetails['title'] ?></div></a>
+                                            </li>
                                         <?php endforeach; ?>
                                     </ul>
                                 </div>
                             </div>
+                        
                         <?php endforeach; ?>
                     </div>
 
@@ -37,10 +44,11 @@
                 <div class="col-md-10">
                     <div class="entry clearfix">
                         <div class="entry-image">
-                            <h1>Pulses</h1>
+                            <h1><?= $title ?></h1>
                             <div id="style-3" class="panel panel-default scrollbarAllPages">
                                 <div class="panel-body force-overflow">
                                     <?php
+                                    $selectPostId = isset($_REQUEST['id']) ? $_REQUEST['id'] : $collectPostId[0];
                                     print_r($api->getPulsesById($_REQUEST['id'])[0]['content'])
                                     ?> 
                                 </div>
@@ -53,4 +61,9 @@
     </div>
 </section>
 <?php get_footer(); ?>
+<script>
+    $(document).ready(function () {
+       $('.selectedCategory').parent().parent().parent().prev().click();
+    });
+</script>
 

@@ -39,7 +39,12 @@ class API {
             'field' => 'id',
             'terms' => $id]]
         ];
-        return $this->getResults($args);
+        return $this->getResultsSpecific($args);
+    }
+    
+    function home(){
+        $home['details'] = $this->getResults(['posts_per_page' => '1', 'post_status' => 'publish', 'post_type' => 'post', 'p' => 134])[0];
+        return $home;
     }
 
     function getDiseasesById($id) {
@@ -53,7 +58,7 @@ class API {
             'field' => 'id',
             'terms' => $id]]
         ];
-        return $this->getResults($args);
+        return $this->getResultsSpecific($args);
     }
 
     function getHerbalById($id) {
@@ -67,7 +72,7 @@ class API {
             'field' => 'id',
             'terms' => $id]]
         ];
-        return $this->getResults($args);
+        return $this->getResultsSpecific($args);
     }
 
     function getTherapyById($id) {
@@ -81,7 +86,7 @@ class API {
             'field' => 'id',
             'terms' => $getId]]
         ];
-        return $this->getResults($args);
+        return $this->getResultsSpecific($args);
     }
 
     function getPulsesById($id) {
@@ -168,6 +173,20 @@ class API {
         if ($single == 1)
             $output = $output[0];
 
+        return $output;
+    }
+
+    function getResultsSpecific($args, $single = NULL) {
+        $output = [];
+        $query = new WP_Query($args);
+        while ($query->have_posts()): $query->the_post();
+            $id = get_the_ID();
+            $post = [
+                'id' => $id,
+                'title' => get_the_title(),
+            ];
+            array_push($output, $post);
+        endwhile;
         return $output;
     }
 

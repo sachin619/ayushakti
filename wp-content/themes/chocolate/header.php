@@ -6,11 +6,11 @@ if ((is_page('register') && is_user_logged_in()) || (is_page('my-account') && !i
 endif;
 ?>
 <?php if (is_user_logged_in()): ?>
-    <style> #menu-item-85{ display:none; }</style>
+    <style> #menu-item-85,#menu-item-133{ display:none; }</style>
 <?php endif; ?>
 
 <?php if (!is_user_logged_in()): ?>
-    <style> #menu-item-87{ display:none; }</style>
+    <style> #menu-item-87,#menu-item-132{ display:none; }</style>
 <?php endif; ?> 
 
 <!DOCTYPE html>
@@ -86,8 +86,8 @@ endif;
                         <!-- Logo
                         ============================================= -->
                         <div id="logo">
-                            <a href="index.html" class="standard-logo" data-dark-logo="images/logo-dark.png"><img src="<?= get_template_directory_uri() ?>/images/logo.png" alt="Canvas Logo"></a>
-                            <a href="index.html" class="retina-logo" data-dark-logo="images/logo-dark@2x.png"><img src="<?= get_template_directory_uri() ?>/images/logo@2x.png" alt="Canvas Logo"></a>
+                            <a href="<?=get_site_url()?>" class="standard-logo" data-dark-logo="<?=  get_template_directory_uri()?>/images/logo-dark.png"><img src="<?= get_template_directory_uri() ?>/images/logo.png" alt="Canvas Logo"></a>
+                            <a href="<?=get_site_url()?>" class="retina-logo" data-dark-logo="<?=  get_template_directory_uri()?>/images/logo-dark@2x.png"><img src="<?= get_template_directory_uri() ?>/images/logo@2x.png" alt="Canvas Logo"></a>
                         </div><!-- #logo end -->
 
                         <!-- Primary Navigation
