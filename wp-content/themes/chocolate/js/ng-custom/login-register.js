@@ -27,6 +27,14 @@ app.controller('loginRegister', function ($scope, $http, $templateCache) {
         };
         ngPost('register', formData, $scope, $http, $templateCache, 'errorReg');
     };
+    $scope.forgotPasswordSubmit = function () {
+        $('.forgotLoader').show();
+        var formData = {
+            'emailForgot': $('#emailForgot').val(),
+        };
+        ngPost('forgotPassword', formData, $scope, $http, $templateCache, 'errorReg');
+    }
+
 });
 
 function ngPost(typeName, formData, $scope, $http, $templateCache, errorBlock, event) {
@@ -37,10 +45,11 @@ function ngPost(typeName, formData, $scope, $http, $templateCache, errorBlock, e
         headers: {'Content-Type': 'application/x-www-form-urlencoded'},
         cache: $templateCache
     }).success(function (response) {
+        $('.forgotLoader').hide();
         $('.loginLoader').hide();
         $('.registerLoader').hide();
-        if (typeName == 'login' && response.msg=='success_login') {
-            window.location=base_url;
+        if (typeName == 'login' && response.msg == 'success_login') {
+            window.location = base_url;
         } else {
             swal({
                 html: true,

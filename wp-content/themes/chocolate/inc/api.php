@@ -41,8 +41,8 @@ class API {
         ];
         return $this->getResultsSpecific($args);
     }
-    
-    function home(){
+
+    function home() {
         $home['details'] = $this->getResults(['posts_per_page' => '1', 'post_status' => 'publish', 'post_type' => 'post', 'p' => 134])[0];
         return $home;
     }
@@ -196,6 +196,78 @@ class API {
             $image = wp_get_attachment_image_src(38, 'full');
         endif;
         return $image['0'];
+    }
+
+    function contactUs() {
+        return ['msg' => 'hey'];
+        $headers = 'Content-type: text/html';
+        $name = $_REQUEST['fname'];
+        $email = $_REQUEST['email'];
+        $phone = $_REQUEST['phone'];
+        $message = $_REQUEST['message'];
+        $body = "<p>Enquiry from $name</p><br><br>New Enquiry<br><br><p>Email : $email</p>Phone : $phone <p>Message : $message</p><br><br>Regards,<br><br>Team Ayushakti";
+        wp_mail(get_option('smtp_user'), "Contact Us", $body, $headers);
+        $bodyUser = "Hi $name,<br><br> Thank you for contacting us. We will get back to you shortly.<br><br>Regards,<br><br>Team Ayushakti";
+        wp_mail($email, "Contact Us", $bodyUser, $headers);
+        return ['msg' => "Thank you for getting in touch. We will respond to you shortly.", 'errorType' => 'success'];
+    }
+
+    function forgotPassword() {
+        $getUser = get_user_by('login', $_REQUEST['emailForgot']);
+        $getUserEmail = get_user_by('email', $_REQUEST['emailForgot']);
+        if (!empty($getUser)):
+            $uid = $getUser->data->ID;
+        elseif (!empty($getUserEmail)):
+            $uid = $getUserEmail->data->ID;
+        else:
+            return ['msg' => "Not a valid Email Id", 'errorType' => 'danger'];
+        endif;
+        $user_data = get_userdata($uid)->data;
+        $getFirstName = get_user_meta($uid, 'first_name')[0];
+        $user_login = $user_data->user_login;
+        $user_email = $user_data->user_email;
+        $first_name = $getFirstName;
+        $key = get_password_reset_key($user_data);
+        $url = network_site_url("reset-password/?action=rp&key=$key&login=" . rawurlencode($user_login), 'login');
+        if (!empty($url)):
+            return $this->forgotPasswordMail($first_name, $user_email, $user_login, $key);
+        endif;
+    }
+
+    function forgotPasswordMail($first_name, $user_email, $user_login, $key) {
+        $message = __("Hi $first_name,") . "<br><br>";
+        $message .= __('Regarding your request for password retrieval, please follow the link: ') . "<br><br>";
+        $message .= network_site_url("reset-password/?action=rp&key=$key&login=" . rawurlencode($user_login), 'login') . "<br><br>";
+        $message .= __('Regards,') . "<br>";
+        $message .= __('Team Ayushakti');
+        $headers = 'Content-type: text/html';
+        $getResult = wp_mail($user_email, "Reset Password", $message, $headers);
+        if (empty($user_email)):
+            return ['msg' => 'Email Id does not exist', 'errorType' => 'danger'];
+        endif;
+        if ($getResult):
+            return ['msg' => 'Reset password link has been send to your Email Id', 'errorType' => 'success'];
+        else:
+            return ['msg' => 'Something goes wrong try again later!', 'errorType' => 'danger'];
+        endif;
+    }
+
+    function forgotPasswordReset() {
+        $getPassword = $_REQUEST['newPassword'];
+        $getkey = $_REQUEST['key'];
+        $getLogin = urldecode($_REQUEST['login']);
+        $result = check_password_reset_key($getkey, $getLogin);
+        if (isset($result->errors)):
+            return ['msg' => "Invalid key", 'errorType' => 'danger'];
+        else:
+            $user_id = (array) $result->data;
+            $getResult = wp_set_password($getPassword, $user_id['ID']);
+            if (!is_wp_error($getResult)):
+                return ['msg' => "Password Changed Successfully", 'errorType' => 'success'];
+            else:
+                return ['msg' => "Invalid key", 'errorType' => 'danger'];
+            endif;
+        endif;
     }
 
 }

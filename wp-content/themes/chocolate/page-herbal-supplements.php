@@ -25,6 +25,7 @@
                                         foreach ($getType as $getTypeDetails):
                                             $getBaseUrl = strtok($_SERVER['REQUEST_URI'], '?');
                                             $collectPostId[] = $getTypeDetails['id'];
+                                            $collectTitle[] = $getTypeDetails['title'];
                                             $createUrl = $getBaseUrl . "?id=" . $getTypeDetails['id'] . "&type=" . $getCategory->term_id;
                                             ?>
                                             <li class="<?= $getTypeDetails['id'] == $_REQUEST['id'] && $getCategory->term_id == $_REQUEST['type'] ? 'selectedCategory' : '' ?>">
@@ -59,7 +60,21 @@
 <?php get_footer(); ?>
 <script>
     $(document).ready(function () {
-       $('.selectedCategory').parent().parent().parent().prev().click();
+        $('.selectedCategory').parent().parent().parent().prev().click();
     });
 </script>
+<script>
+    //search functionality
+    $(document).ready(function () {
+        $('input.typeahead-devs').typeahead({
+            name: 'search',
+            local:<?php print_r(json_encode(array_values(array_unique($collectTitle)))); ?>
+        });
+    });
+    $(document).on('change', 'input.typeahead-devs', function () {
+        var getSelectedVal = $('.tt-is-under-cursor p').html();
+        $(".acc_content:contains('" + getSelectedVal + "')").first().prev().click();
+    });
+</script>
+
 

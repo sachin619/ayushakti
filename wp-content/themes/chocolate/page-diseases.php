@@ -6,7 +6,7 @@
             <div class="row">
                 <div class="col-md-2 LHScolun">						
                     <form class="search_box" action="#" method="POST">
-                        <span class="twitter-typeahead" style="position: relative; display: inline-block;"><input type="text" disabled="" spellcheck="off" autocomplete="off" class="tt-hint" style="position: absolute; top: 0px; left: 0px; border-color: transparent; box-shadow: none; background: rgb(255, 255, 255) none repeat scroll 0% 0%;"><input type="text" placeholder="Search..." class="form-control typeahead-devs tt-query" name="search" autocomplete="off" spellcheck="false" style="position: relative; vertical-align: top; background-color: transparent;" dir="auto"><span style="position: absolute; left: -9999px; visibility: hidden; white-space: nowrap; font-family: &quot;Lato&quot;,sans-serif; font-size: 16px; font-style: normal; font-variant: normal; font-weight: 400; word-spacing: 0px; letter-spacing: 0px; text-indent: 0px; text-rendering: optimizelegibility; text-transform: none;"></span><span class="tt-dropdown-menu" style="position: absolute; top: 100%; left: 0px; z-index: 100; display: none;"></span></span>
+                        <span class="twitter-typeahead" style="position: relative; display: inline-block;"><input type="text" disabled="" spellcheck="off" autocomplete="off" class="tt-hint" style="position: absolute; top: 0px; left: 0px; border-color: transparent; box-shadow: none; background: rgb(255, 255, 255) none repeat scroll 0% 0%;"><input type="text" placeholder="Search..." class="form-control typeahead-devs tt-query searchBox" name="search" autocomplete="off" spellcheck="false" style="position: relative; vertical-align: top; background-color: transparent;" dir="auto"><span style="position: absolute; left: -9999px; visibility: hidden; white-space: nowrap; font-family: &quot;Lato&quot;,sans-serif; font-size: 16px; font-style: normal; font-variant: normal; font-weight: 400; word-spacing: 0px; letter-spacing: 0px; text-indent: 0px; text-rendering: optimizelegibility; text-transform: none;"></span><span class="tt-dropdown-menu" style="position: absolute; top: 100%; left: 0px; z-index: 100; display: none;"></span></span>
                     </form>
                     <div class="accordion accordion-bg clearfix">	
                         <?php
@@ -24,6 +24,7 @@
                                         $getType = $api->getDiseases($getCategory->term_id);
                                         foreach ($getType as $getTypeDetails):
                                             $collectPostId[] = $getTypeDetails['id'];
+                                            $collectTitle[] = $getTypeDetails['title'];
                                             $getBaseUrl = strtok($_SERVER['REQUEST_URI'], '?');
                                             $createUrl = $getBaseUrl . "?id=" . $getTypeDetails['id'] . "&type=" . $getCategory->term_id;
                                             ?>
@@ -45,7 +46,7 @@
                     <div class="col-md-3">
                         <div class="entry clearfix">
                             <div class="entry-image">
-                                <h1 ><span class="diseaseTitle">AS PER AYURVEDA</span>
+                                <h1 ><span class="diseaseTitle"><?= pll_e("AS PER AYURVEDA") ?></span>
                                     <a href="#" onclick="return false" data-toggle="modal" class="getDetail" data-target="#diseasesDetail">
                                         <i class="icon-email2" ></i>
                                     </a>
@@ -60,7 +61,7 @@
                     <div class="col-md-3">
                         <div class="entry clearfix">
                             <div class="entry-image">
-                                <h1 ><span class="diseaseTitle">PULSE</span>
+                                <h1 ><span class="diseaseTitle"><?= pll_e("PULSE")?></span>
                                     <a href="#" onclick="return false" data-toggle="modal" class="getDetail" data-target="#diseasesDetail">
                                         <i class="icon-email2"></i></a></h1>
                                 <div id="style-3" class="panel panel-default scrollbar">
@@ -73,7 +74,7 @@
                     <div class="col-md-3">
                         <div class="entry clearfix">
                             <div class="entry-image">
-                                <h1 ><span class="diseaseTitle">SIGNS</span>
+                                <h1 ><span class="diseaseTitle"><?= pll_e("SIGNS")?></span>
                                     <a href="#" onclick="return false" data-toggle="modal" class="getDetail" data-target="#diseasesDetail">
                                         <i class="icon-email2"></i></a></h1>
                                 <div id="style-3" class="panel panel-default scrollbar">
@@ -86,7 +87,7 @@
                     <div class="col-md-3">
                         <div class="entry clearfix">
                             <div class="entry-image">
-                                <h1 ><span class="diseaseTitle">HERBS</span>
+                                <h1 ><span class="diseaseTitle"><?= pll_e("HERBS")?></span>
                                     <a href="#" onclick="return false" data-toggle="modal" class="getDetail" data-target="#diseasesDetail">
                                         <i class="icon-email2"></i></a></h1>
                                 <div id="style-3" class="panel panel-default scrollbar">
@@ -99,7 +100,7 @@
                     <div class="col-md-3">
                         <div class="entry clearfix">
                             <div class="entry-image">
-                                <h1 ><span class="diseaseTitle">THERAPY </span>
+                                <h1 ><span class="diseaseTitle"><?= pll_e("THERAPY")?> </span>
                                     <a href="#" onclick="return false" data-toggle="modal" class="getDetail" data-target="#diseasesDetail">
                                         <i class="icon-email2"></i></a></h1>
                                 <div id="style-3" class="panel panel-default scrollbar">
@@ -112,7 +113,7 @@
                     <div class="col-md-3">
                         <div class="entry clearfix">
                             <div class="entry-image">
-                                <h1 ><span class="diseaseTitle">DIET</span>
+                                <h1 ><span class="diseaseTitle"><?= pll_e("DIET")?></span>
                                     <a href="#" onclick="return false" data-toggle="modal" class="getDetail" data-target="#diseasesDetail">
                                         <i class="icon-email2"></i></a></h1>
                                 <div id="style-3" class="panel panel-default scrollbar">
@@ -125,7 +126,7 @@
                     <div class="col-md-3">
                         <div class="entry clearfix">
                             <div class="entry-image">
-                                <h1 ><span class="diseaseTitle">HOME REMEDIES </span>
+                                <h1 ><span class="diseaseTitle"><?= pll_e("HOME REMEDIES")?> </span>
                                     <a href="#" onclick="return false" data-toggle="modal" class="getDetail" data-target="#diseasesDetail">
                                         <i class="icon-email2"></i></a></h1>
                                 <div id="style-3" class="panel panel-default scrollbar">
@@ -138,7 +139,7 @@
                     <div class="col-md-3">
                         <div class="entry clearfix">
                             <div class="entry-image">
-                                <h1 > <span class="diseaseTitle">LIFESTYLE</span> 
+                                <h1 > <span class="diseaseTitle"><?= pll_e("LIFESTYLE")?></span> 
                                     <a href="#" onclick="return false" data-toggle="modal" class="getDetail" data-target="#diseasesDetail">
                                         <i class="icon-email2"></i></a></h1>
                                 <div id="style-3" class="panel panel-default scrollbar">
@@ -180,7 +181,6 @@
     $(document).ready(function () {
         $('.selectedCategory').parent().parent().parent().prev().click();
     });
-
 //loading data to modal on select on block
     $(document).on('click', '.getDetail', function () {
         var getHtml = $(this).closest('.entry-image').find('.panel').html();
@@ -200,3 +200,17 @@
     }
     .diseaseModalWidth ul {list-style-type: none!important;}
 </style>
+<script>
+    //search functionality
+    $(document).ready(function () {
+        $('input.typeahead-devs').typeahead({
+            name: 'search',
+            local:<?php print_r(json_encode(array_values(array_unique($collectTitle)))); ?>
+        });
+    });
+    $(document).on('change', 'input.typeahead-devs', function () {
+        var getSelectedVal = $('.tt-is-under-cursor p').html();
+        $(".acc_content:contains('" + getSelectedVal + "')").first().prev().click();
+    });
+</script>
+

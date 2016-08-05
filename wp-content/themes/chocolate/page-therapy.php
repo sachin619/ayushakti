@@ -1,6 +1,6 @@
 <?php get_header(); ?>
 <?php /* Template Name: Therapy */ ?> 
-<?php $title= get_the_title(); ?>
+<?php $title = get_the_title(); ?>
 <section id="content" style="margin-bottom: 0px;">
     <div class="content-wrap">
         <div class="container-fluid clearfix">
@@ -24,10 +24,11 @@
                                         $getType = $api->therapy($getCategory->term_id);
                                         foreach ($getType as $getTypeDetails):
                                             $collectPostId[] = $getTypeDetails['id'];
+                                            $collectTitle[] = $getTypeDetails['title'];
                                             $getBaseUrl = strtok($_SERVER['REQUEST_URI'], '?');
-                                            $createUrl = $getBaseUrl . "?id=" .  $getTypeDetails['id']."&type=".$getCategory->term_id;
+                                            $createUrl = $getBaseUrl . "?id=" . $getTypeDetails['id'] . "&type=" . $getCategory->term_id;
                                             ?>
-                                            <li class="<?= $getTypeDetails['id'] == $_REQUEST['id']&&$getCategory->term_id==$_REQUEST['type'] ? 'selectedCategory' : '' ?>">
+                                            <li class="<?= $getTypeDetails['id'] == $_REQUEST['id'] && $getCategory->term_id == $_REQUEST['type'] ? 'selectedCategory' : '' ?>">
                                                 <a href="<?= $createUrl ?>"><div><?= $getTypeDetails['title'] ?></div></a></li>
                                         <?php endforeach; ?>
                                     </ul>
@@ -44,7 +45,7 @@
                             <div id="style-3" class="panel panel-default scrollbarAllPages">
                                 <div class="panel-body force-overflow">
                                     <?php
-                                    $selectPostId=isset($_REQUEST['id'])?$_REQUEST['id']:$collectPostId[0];
+                                    $selectPostId = isset($_REQUEST['id']) ? $_REQUEST['id'] : $collectPostId[0];
                                     print_r($api->getTherapyById($selectPostId)[0]['content'])
                                     ?> 
                                 </div>
@@ -59,7 +60,20 @@
 <?php get_footer(); ?>
 <script>
     $(document).ready(function () {
-       $('.selectedCategory').parent().parent().parent().prev().click();
+        $('.selectedCategory').parent().parent().parent().prev().click();
+    });
+</script>
+<script>
+    //search functionality
+    $(document).ready(function () {
+        $('input.typeahead-devs').typeahead({
+            name: 'search',
+            local:<?php print_r(json_encode(array_values(array_unique($collectTitle)))); ?>
+        });
+    });
+    $(document).on('change', 'input.typeahead-devs', function () {
+        var getSelectedVal = $('.tt-is-under-cursor p').html();
+        $(".acc_content:contains('" + getSelectedVal + "')").first().prev().click();
     });
 </script>
 
